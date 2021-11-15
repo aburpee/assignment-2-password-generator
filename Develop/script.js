@@ -16,16 +16,11 @@ var generatePassword = function(input) {
   for (element of characterSelections) {
     searchList = searchList.concat(allCharsVar[element])
   }
-  console.log('searchList', searchList)
-  console.log(chosenPassLength)
   for (i=0; i<chosenPassLength - 1; i++) {
     passwordCharacters.push(searchList[(Math.floor(Math.random() * searchList.length))])
   }
   return passwordCharacters.join("")
 }
-
-
-
 
 //function to determine prompt conditions. iterate through list x times to append to characterSelections
 var characterSelectors = function() {
@@ -52,19 +47,15 @@ var characterSelectors = function() {
     //makes sure each prompt var is not null and includes y then adds to array of character types
     else {
       if (passUppers !== null && passUppers.toLowerCase().includes('y')) {
-        console.log('uppers');
         characterSelections.push("uppers");
       } 
       if (passLowers !== null && passLowers.toLowerCase().includes('y')) {
-        console.log('lowers');
         characterSelections.push("lowers");
       }
       if (passSpecials !== null && passSpecials.toLowerCase().includes('y')) {
-        console.log('specials');
         characterSelections.push('specials');
       }
       if (passNumbers !== null && passNumbers.toLowerCase().includes('y')) {
-        console.log('numbers');
         characterSelections.push('numbers')
       }
       chosenPassLength = passLength
@@ -73,7 +64,6 @@ var characterSelectors = function() {
     
   }
 
-  characterSelectors();
   // getRandomAllChars(characterSelections);
 
 
@@ -89,6 +79,9 @@ function writePassword() {
   passwordText.value = password
 
 }
-
+//runs character selections
+characterSelectors();
 // Add event listener to generate button
+
+
 generateBtn.addEventListener("click", writePassword);
