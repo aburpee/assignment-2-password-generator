@@ -14,6 +14,7 @@ var allCharsVar = {
 }
 //function to generate password
 var generatePassword = function() {
+
 // adds desired character types to array for reference in next loop
   for (element of characterSelections) {
     searchList = searchList.concat(allCharsVar[element])
@@ -34,12 +35,11 @@ var characterSelectors = function() {
     // takes inputs for each prompt and assigns a boolean value to each if the answer is in the yes const
     const upperInput = window.prompt("would you like to include upper case letters?").toLowerCase()
     var passUppers = yesAnswers.includes(upperInput)
-    
-    const specialInput = window.prompt("would you like to include special characters").toLowerCase() === 'yes'
+    const specialInput = window.prompt("would you like to include special characters").toLowerCase()
     var passSpecials = yesAnswers.includes(specialInput)
-    const lowerInput = window.prompt("would you like to include lowercase letters?").toLowerCase() === 'yes'
+    const lowerInput = window.prompt("would you like to include lowercase letters?").toLowerCase()
     var passLowers = yesAnswers.includes(lowerInput)
-    const numbersInput = window.prompt("would you like to include numbers").toLowerCase() === 'yes'
+    const numbersInput = window.prompt("would you like to include numbers").toLowerCase()
     var passNumbers = yesAnswers.includes(numbersInput)
     passLength = window.prompt("how many characters would you like? please pick between 8 and 128")     
     // if all inputs don't return true, window starts you over (we have to have at least one character type to generate the password)
@@ -48,7 +48,7 @@ var characterSelectors = function() {
       characterSelectors();
     }
     //if the parsed integer does not satisfy the below requirements
-   else if( !(parseInt(passLength) <= 128) || !(parseInt(passLength) >=8)){
+    else if( !(parseInt(passLength) <= 128) || !(parseInt(passLength) >=8)){
     // else if (passLength === "" || passLength === null || parseInt(passLength) < 8 || parseInt(passLength) > 128) {
       window.alert("you need to pick a valid number between 8 and 128")
       characterSelectors();
