@@ -71,7 +71,6 @@ var characterSelectors = function() {
     
   }
 
-  // getRandomAllChars(characterSelections);
 
 
 // Get references to the #generate element
@@ -86,9 +85,7 @@ function writePassword() {
   passwordText.value = password
 
 }
-//runs character selections
+
 
 // Add event listener to generate button
-
-
 generateBtn.addEventListener("click", writePassword);
