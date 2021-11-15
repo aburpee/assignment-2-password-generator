@@ -1,22 +1,25 @@
-// Assignment code here
+// setting variables
 var passwordCharacters = []
 var characterSelections = []
 var searchList = []
-var chosenPassLength = ""
+var passLength;
 
+
+//object variable that holds lists of different character types
 var allCharsVar = {
   uppers : ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
   lowers : ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
   specials : ["'","~","!","@","#","$","%","^","&","*","_","-","+","=","`","|","(",")","{","}","[","]",":",";","<",">",",",".","?"],
   numbers : ["1","2","3","4","5","6","7","8","9","0"]
 }
-// var inputArray = ["1","2","3","4","5","6","7","8","9","0"]
-var generatePassword = function(input) {
-
+//function to generate password
+var generatePassword = function() {
+// adds desired character types to array for reference in next loop
   for (element of characterSelections) {
     searchList = searchList.concat(allCharsVar[element])
   }
-  for (i=0; i<chosenPassLength - 1; i++) {
+// loops through array with math random and selects character user input number of times
+  for (i=0; i<passLength; i++) {
     passwordCharacters.push(searchList[(Math.floor(Math.random() * searchList.length))])
   }
   return passwordCharacters.join("")
@@ -24,43 +27,47 @@ var generatePassword = function(input) {
 
 //function to determine prompt conditions. iterate through list x times to append to characterSelections
 var characterSelectors = function() {
-    
+    // setting my characterSelections list to blank after each iteration
     characterSelections = []
-    chosenPassLength = ""
-
-    // takes inputs for each prompt
-    var passUppers = window.prompt("would you like to include upper case letters?")
-    var passSpecials = window.prompt("would you like to include special characters")
-    var passLowers = window.prompt("would you like to include lowercase letters?")
-    var passNumbers = window.prompt("would you like to include numbers")
-    var passLength = window.prompt("how many characters would you like? please pick between 8 and 128")     
-
-    if ((passUppers === "" || passUppers === null || passUppers.toLowerCase().includes('n')) && (passLowers === "" || passLowers === null || passLowers.toLowerCase().includes("n")) && (passSpecials === "" || passSpecials === null || passSpecials.toLowerCase().includes("n")) && (passNumbers === "" || passSpecials === null || passNumbers.toLowerCase().includes("n"))) {
+    // creating a constant with available "yes" answers 
+    const yesAnswers = ['yes', 'yeah', 'yup', 'hell yeah', 'y']
+    // takes inputs for each prompt and assigns a boolean value to each if the answer is in the yes const
+    const upperInput = window.prompt("would you like to include upper case letters?").toLowerCase()
+    var passUppers = yesAnswers.includes(upperInput)
+    
+    const specialInput = window.prompt("would you like to include special characters").toLowerCase() === 'yes'
+    var passSpecials = yesAnswers.includes(specialInput)
+    const lowerInput = window.prompt("would you like to include lowercase letters?").toLowerCase() === 'yes'
+    var passLowers = yesAnswers.includes(lowerInput)
+    const numbersInput = window.prompt("would you like to include numbers").toLowerCase() === 'yes'
+    var passNumbers = yesAnswers.includes(numbersInput)
+    passLength = window.prompt("how many characters would you like? please pick between 8 and 128")     
+    // if all inputs don't return true, window starts you over (we have to have at least one character type to generate the password)
+    if (!passUppers && !passLowers && !passSpecials && !passNumbers) {
       window.alert("you need to select at least one character type");
       characterSelectors();
     }
-   
-    else if (passLength === "" || passLength === null || parseInt(passLength) < 8 || parseInt(passLength) > 128) {
+    //if the parsed integer does not satisfy the below requirements
+   else if( !(parseInt(passLength) <= 128) || !(parseInt(passLength) >=8)){
+    // else if (passLength === "" || passLength === null || parseInt(passLength) < 8 || parseInt(passLength) > 128) {
       window.alert("you need to pick a valid number between 8 and 128")
       characterSelectors();
     }
-    //makes sure each prompt var is not null and includes y then adds to array of character types
+    //adds character type to characterSelections if true
     else {
-      if (passUppers !== null && passUppers.toLowerCase().includes('y')) {
+      if (passUppers) {
         characterSelections.push("uppers");
       } 
-      if (passLowers !== null && passLowers.toLowerCase().includes('y')) {
+      if (passLowers) {
         characterSelections.push("lowers");
       }
-      if (passSpecials !== null && passSpecials.toLowerCase().includes('y')) {
+      if (passSpecials) {
         characterSelections.push('specials');
       }
-      if (passNumbers !== null && passNumbers.toLowerCase().includes('y')) {
+      if (passNumbers) {
         characterSelections.push('numbers')
       }
-      chosenPassLength = passLength
     }
-    console.log(characterSelections)
     
   }
 
