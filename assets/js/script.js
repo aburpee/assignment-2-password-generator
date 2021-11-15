@@ -25,6 +25,14 @@ var generatePassword = function() {
   }
   return passwordCharacters.join("")
 }
+//converts null values to empty strings for cancel errors in window prompt .toLowerCase
+var nullToString = function(nullInput) {
+    if (nullInput === null) {
+    return ""}
+    else {
+      return nullInput
+    }
+}
 
 //function to determine prompt conditions. iterate through list x times to append to characterSelections
 var characterSelectors = function() {
@@ -33,14 +41,14 @@ var characterSelectors = function() {
     // creating a constant with available "yes" answers 
     const yesAnswers = ['yes', 'yeah', 'yup', 'hell yeah', 'y']
     // takes inputs for each prompt and assigns a boolean value to each if the answer is in the yes const
-    const upperInput = window.prompt("would you like to include upper case letters?").toLowerCase()
-    var passUppers = yesAnswers.includes(upperInput)
-    const specialInput = window.prompt("would you like to include special characters").toLowerCase()
-    var passSpecials = yesAnswers.includes(specialInput)
-    const lowerInput = window.prompt("would you like to include lowercase letters?").toLowerCase()
-    var passLowers = yesAnswers.includes(lowerInput)
-    const numbersInput = window.prompt("would you like to include numbers").toLowerCase()
-    var passNumbers = yesAnswers.includes(numbersInput)
+    const upperInput = window.prompt("would you like to include upper case letters?")
+    var passUppers = yesAnswers.includes(nullToString(upperInput).toLowerCase())
+    const specialInput = window.prompt("would you like to include special characters")
+    var passSpecials = yesAnswers.includes(nullToString(specialInput).toLowerCase())
+    const lowerInput = window.prompt("would you like to include lowercase letters?")
+    var passLowers = yesAnswers.includes(nullToString(lowerInput).toLowerCase())
+    const numbersInput = window.prompt("would you like to include numbers")
+    var passNumbers = yesAnswers.includes(nullToString(numbersInput).toLowerCase())
     passLength = window.prompt("how many characters would you like? please pick between 8 and 128")     
     // if all inputs don't return true, window starts you over (we have to have at least one character type to generate the password)
     if (!passUppers && !passLowers && !passSpecials && !passNumbers) {
