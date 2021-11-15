@@ -1,20 +1,31 @@
 // Assignment code here
-var password = []
+var passwordCharacters = []
 var characterSelections = []
+var searchList = []
 var chosenPassLength = ""
 
-var allCharVars = {
+var allCharsVar = {
   uppers : ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
   lowers : ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
   specials : ["'","~","!","@","#","$","%","^","&","*","_","-","+","=","`","|","(",")","{","}","[","]",":",";","<",">",",",".","?"],
   numbers : ["1","2","3","4","5","6","7","8","9","0"]
 }
+// var inputArray = ["1","2","3","4","5","6","7","8","9","0"]
+var generatePassword = function(input) {
 
-
-var promptInputs = function() {
-  //empties character selections and pass length variables
-  
+  for (element of characterSelections) {
+    searchList = searchList.concat(allCharsVar[element])
+  }
+  console.log('searchList', searchList)
+  console.log(chosenPassLength)
+  for (i=0; i<chosenPassLength - 1; i++) {
+    passwordCharacters.push(searchList[(Math.floor(Math.random() * searchList.length))])
+  }
+  return passwordCharacters.join("")
 }
+
+
+
 
 //function to determine prompt conditions. iterate through list x times to append to characterSelections
 var characterSelectors = function() {
@@ -62,41 +73,8 @@ var characterSelectors = function() {
     
   }
 
-  // var generatePassword = function() {
-  //   for 
-  // }
-
   characterSelectors();
-
-    // console.log(characterSelections)
-    // if (promptUppers.toLowerCase().includes('n') && passLowers.includes('n') && passSpecials.includes('n') && passNumbers.includes('n')) {
-    // console.log("noChar")
-    // }
-    // else if (promptUppers.toLowerCase().includes('y') && passLowers.toLowerCase().includes('y') && passSpecials.toLowerCase().includes('y') && passNumbers.toLowerCase().includes('y')) {
-    //   console.log("allChar")
-    // }
-    // else if (promptUppers.toLowerCase().includes('n') && passLowers.toLowerCase().includes('y') && passSpecials.toLowerCase().includes('y') && passNumbers.toLowerCase().includes('y')) {
-    //   console.log("allCharNoUppers")
-    // }
-    // else if (promptUppers.toLowerCase().includes('n') && passLowers.toLowerCase().includes('n') && passSpecials.toLowerCase().includes('y') && passNumbers.toLowerCase().includes('y')) {
-    //   console.log("allCharNoUppersNoLowers")
-    // }
-    // else if (promptUppers.toLowerCase().includes('n') && passLowers.toLowerCase().includes('n') && passSpecials.toLowerCase().includes('n') && passNumbers.toLowerCase().includes('y')) {
-    //   console.log("allCharNoUppersNoLowersNoSpecials")
-    // }
-    // else if (promptUppers.toLowerCase().includes('n') && passLowers.toLowerCase().includes('n') && passSpecials.toLowerCase().includes('y') && passNumbers.toLowerCase().includes('y')) {
-    //   console.log("allChar")
-    // }
-    // else if (promptUppers.toLowerCase().includes('n') && passLowers.toLowerCase().includes('y') && passSpecials.toLowerCase().includes('y') && passNumbers.toLowerCase().includes('y')) {
-    //   console.log("allCharNoUppers")
-    // }
-    // else if (promptUppers.toLowerCase().includes('n') && passLowers.toLowerCase().includes('n') && passSpecials.toLowerCase().includes('y') && passNumbers.toLowerCase().includes('y')) {
-    //   console.log("allCharNoUppersNoLowers")
-    // }
-    // else if (promptUppers.toLowerCase().includes('n') && passLowers.toLowerCase().includes('n') && passSpecials.toLowerCase().includes('n') && passNumbers.toLowerCase().includes('y')) {
-    //   console.log("allCharNoUppersNoLowersNoSpecials")
-    // }
-  // }
+  // getRandomAllChars(characterSelections);
 
 
 // Get references to the #generate element
@@ -104,11 +82,11 @@ var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
 function writePassword() {
-  var password = generatePassword();
+  var password = generatePassword(characterSelections);
   var passwordText = document.querySelector("#password");
   console.log("password button click")
 
-  passwordText.value = password;
+  passwordText.value = password
 
 }
 
