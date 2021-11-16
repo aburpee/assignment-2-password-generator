@@ -5,6 +5,7 @@ var searchList = []
 var passLength;
 
 
+
 //object variable that holds lists of different character types
 var allCharsVar = {
   uppers : ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
@@ -12,32 +13,24 @@ var allCharsVar = {
   specials : ["'","~","!","@","#","$","%","^","&","*","_","-","+","=","`","|","(",")","{","}","[","]",":",";","<",">",",",".","?"],
   numbers : ["1","2","3","4","5","6","7","8","9","0"]
 }
-//function to generate password
-var generatePassword = function() {
 
-// adds desired character types to array for reference in next loop
-  for (element of characterSelections) {
-    searchList = searchList.concat(allCharsVar[element])
-  }
-// loops through array with math random and selects character user input number of times
-  for (i=0; i<passLength; i++) {
-    passwordCharacters.push(searchList[(Math.floor(Math.random() * searchList.length))])
-  }
-  return passwordCharacters.join("")
-}
 //converts null values to empty strings for cancel errors in window prompt .toLowerCase
 var nullToString = function(nullInput) {
     if (nullInput === null) {
-    return ""}
+    return "";
+    }
     else {
-      return nullInput
+      return nullInput;
     }
 }
 
 //function to determine prompt conditions. iterate through list x times to append to characterSelections
 var characterSelectors = function() {
+    
     // setting my characterSelections list to blank after each iteration
     characterSelections = []
+    console.log("charSelect", characterSelections)
+    passLength = ''
     // creating a constant with available "yes" answers 
     const yesAnswers = ['yes', 'yeah', 'yup', 'hell yeah', 'y']
     // takes inputs for each prompt and assigns a boolean value to each if the answer is in the yes const
@@ -58,7 +51,7 @@ var characterSelectors = function() {
     //if the parsed integer does not satisfy the below requirements
     else if( !(parseInt(passLength) <= 128) || !(parseInt(passLength) >=8)){
     // else if (passLength === "" || passLength === null || parseInt(passLength) < 8 || parseInt(passLength) > 128) {
-      window.alert("you need to pick a valid number between 8 and 128")
+      window.alert("you need to pick a valid number between 8 and 128");
       characterSelectors();
     }
     //adds character type to characterSelections if true
@@ -73,27 +66,52 @@ var characterSelectors = function() {
         characterSelections.push('specials');
       }
       if (passNumbers) {
-        characterSelections.push('numbers')
+        characterSelections.push('numbers');
       }
     }
-    
+
   }
 
+  //function to generate password
+var generatePassword = function() {
+    
+    characterSelectors();
+  // adds desired character types to array for reference in next loop
+    searchList = []
+    passwordCharacters = []
+    for (element of characterSelections) {
+      searchList = searchList.concat(allCharsVar[element]);
+    }
+    
+  // loops through array with math random and selects character user input number of times
+    for (i=0; i<passLength; i++) {
+      passwordCharacters.push(searchList[(Math.floor(Math.random() * searchList.length))]);
+    }
+    return passwordCharacters.join("")
+  }
 
 
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
+
+// function erasePassword() {
+//   var password = generatePassword([]);
+//   var passwordText = document.querySelector("#password");
+//   console.log("password button click");
+//   passwordText.value = password
+
+// }
+
 // Write password to the #password input
 function writePassword() {
   
-  characterSelectors();
-  password = generatePassword(characterSelections);
+  var password = generatePassword();
   var passwordText = document.querySelector("#password");
-  console.log("password button click")
+  console.log("password button click");
   passwordText.value = password
-}
 
+}
 
 // Add event listener to generate button
 
